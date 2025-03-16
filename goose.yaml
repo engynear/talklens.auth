@@ -1,0 +1,9 @@
+version: "1.0"
+driver: postgres
+database: ${DB_NAME}
+host: ${DB_HOST}
+port: ${DB_PORT}
+user: ${DB_USER}
+password: ${DB_PASSWORD}
+sslmode: ${DB_SSLMODE}
+migrations: ./migrations 
