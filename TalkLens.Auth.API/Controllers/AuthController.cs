@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TalkLens.Auth.Application.DTOs;
@@ -46,6 +47,32 @@ public class AuthController : ControllerBase
                 return BadRequest(result);
             }
             return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+    }
+
+    [Authorize]
+    [HttpGet("me")]
+    public async Task<ActionResult<UserDto>> GetCurrentUserAsync()
+    {
+        try
+        {
+            var userName = User.FindFirst(ClaimTypes.Name)?.Value;
+            if (string.IsNullOrEmpty(userName))
+            {
+                return BadRequest(new { message = "User not found in token" });
+            }
+
+            var user = await _authService.GetUserProfileAsync(userName);
+            if (user == null)
+            {
+                return NotFound(new { message = "User not found" });
+            }
+
+            return Ok(user);
         }
         catch (Exception ex)
         {
