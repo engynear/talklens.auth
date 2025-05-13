@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using TalkLens.Auth.Application.DTOs;
+using TalkLens.Auth.Core.DTOs.Token;
 using TalkLens.Auth.Core.Interfaces;
 
 namespace TalkLens.Auth.API.Controllers;
